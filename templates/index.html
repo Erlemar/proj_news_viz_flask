@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Радар топиков</title>
+    <meta charset="utf-8">
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">script></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vega-tooltip/build/vega-tooltip.min.css">
+  <!-- Import vega-embed -->
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+    <style>hr, h3 {padding-bottom: 20px;}canvas {background-color: #fffff;}</style>
+    <style>
+    div.waterfall {
+        width: 1200px;
+        height: 300px;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+    </style>
+  </head>
+  <body>
+			<div class="col-md-3" align="center">
+              Источник<br>
+              <select name="source" id="source" disabled color="gray">
+                <option value="lenta" selected>Лента</option>
+              </select><br>
+
+              Тип графика<br>
+              <select name="plot_type" id="plot_type" onchange="change_plot()">
+                <option value="ridge" selected>Ridge plot</option>
+                <option value="bump">Bump chart</option>
+
+              </select><br>
+              Дополнительные данные<br>
+              <select name="add_data" id="add_data" disabled>
+                <option value="all" selected>Нет</option>
+              </select><br>
+
+              Темы<br>
+              <select name="topic" id="topic" onchange="change_plot()" multiple size="8">
+                <option value="all" selected>All</option>
+              </select><br>
+
+              Рубрики<br>
+              <select name="rubric" id="rubric" onchange="change_plot()">
+              </select><br>
+
+			</div>
+
+    <div class="container">
+
+      <div class="header">
+        <h3 class="text-muted">Радар топиков</h3>
+      </div>
+
+      <div class="charts text-center">
+        <div class="row">
+          <div id="bar">
+
+          </div>
+        </div><hr>
+        <!-- Placeholder for the tooltip -->
+        <div id="vis-tooltip" class="vg-tooltip"></div>
+      </div>
+    </div>
+	<script src="static/draw.js"></script>
+
+  </body>
+</html>

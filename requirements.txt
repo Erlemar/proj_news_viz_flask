@@ -1,0 +1,11 @@
+pandas
+altair
+flask
+pickle
+json
+Flask
+Flask-Cors
+gunicorn
+requests
+requests-file
+requests-oauthlib
