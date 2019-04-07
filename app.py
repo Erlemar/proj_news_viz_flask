@@ -7,7 +7,7 @@ import pandas as pd
 import altair as alt
 import json
 from datamanager import DataManager
-
+import os
 
 data_manager = DataManager()
 app = Flask(__name__)
@@ -34,4 +34,5 @@ def get_data():
         return json.dumps(data_dict)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
