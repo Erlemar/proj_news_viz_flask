@@ -12,14 +12,14 @@ class DataManager(object):
             self.topics_dict = json.load(f)
         with open('src/rubrics_dict.json', 'r') as f:
             self.rubrics_dict = json.load(f)
+        with open('src/rubric_topic_words.json', 'r') as f:
+            self.rubric_topic_words = json.load(f)
 
     def get_initial_data(self):
         plot_df = self.data.loc[self.data['Rubric'] == 'bivs-SSR']
         chart = self.make_ridge_chart(plot_df)
 
-        with open(f'src/bivs-SSR.pickle', 'rb') as f:
-            rubric_topics = pickle.load(f)
-        rubric_topics = {k: list(v) for k, v in rubric_topics.items()}
+        rubric_topics = self.rubric_topic_words['bivs-SSR']
 
         return {'rubrics_dict': self.rubrics_dict,
                 'topics_dict': self.topics_dict,
@@ -48,11 +48,12 @@ class DataManager(object):
         with open(f'src/{rubric}.pickle', 'rb') as f:
             rubric_topics = pickle.load(f)
         # rubric_topics = pd.DataFrame(rubric_topics)
-
+        rubric_topics = self.rubric_topic_words[rubric]
         if 'All' in topics:
-            rubric_topics = {k: list(v) for k, v in rubric_topics.items()}
+            rubric_topics = rubric_topics
         else:
-            rubric_topics = {k: list(v) for k, v in rubric_topics.items() if k in topics}
+            rubric_topics = {k: v for k, v in rubric_topics.items() if k in topics}
+        print(rubric_topics)
 
         return {'chart': chart.to_json(), 'rubric_topics': rubric_topics}
 
