@@ -30,7 +30,7 @@ def change_plot():
 def get_data():
     if request.method == 'POST':
         data_dict = data_manager.get_initial_data()
-        print('data_dict', data_dict)
+        print('data_dict', data_dict.keys())
         # data_dict = {'rubrics_dict': rubrics_dict, 'topics_dict': topics_dict}
         return json.dumps(data_dict)
 

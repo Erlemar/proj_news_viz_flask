@@ -1,9 +1,4 @@
 function change_plot() {
-
-
-	// get text and dates
-
-    // get selected channels
     var plot_type_id = document.getElementById('plot_type');
     var plot_type = plot_type_id.options[plot_type_id.selectedIndex].value
 
@@ -36,7 +31,7 @@ function change_plot() {
 
             var tbl = document.getElementById('table');
 	        tbl.remove();
-            //tableCreate(JSON.parse(response)['rubric_topics']);
+            tableCreate(JSON.parse(response)['rubric_topics']);
         };
 		}
 	);
@@ -56,7 +51,7 @@ function get_data() {
 		    // no result
 		    console.log('1111111');
 		} else {
-		    //console.log(JSON.parse(response));
+		    console.log(JSON.parse(response));
             var rubrics_dict = JSON.parse(response)['rubrics_dict'];
             var select = document.getElementById("rubric");
             for(index in rubrics_dict) {
@@ -73,7 +68,7 @@ function get_data() {
             var ch = JSON.parse(JSON.parse(response)['chart']);
             vegaEmbed('#bar', ch);
             // console.log(JSON.parse(response)['rubric_topics']);
-            //tableCreate(JSON.parse(response)['rubric_topics']);
+            tableCreate(JSON.parse(response)['rubric_topics']);
         };
 		}
 	);
