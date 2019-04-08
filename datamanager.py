@@ -17,14 +17,10 @@ class DataManager(object):
         plot_df = self.data.loc[self.data['Rubric'] == 'bivs-SSR']
         chart = self.make_ridge_chart(plot_df)
 
-        with open(f'src/bivs-SSR.pickle', 'rb') as f:
-            rubric_topics = pickle.load(f)
-        rubric_topics = {k: list(v) for k, v in rubric_topics.items()}
 
         return {'rubrics_dict': self.rubrics_dict,
                 'topics_dict': self.topics_dict,
-                'chart': chart.to_json(),
-                'rubric_topics': rubric_topics}
+                'chart': chart.to_json()}
 
     def change_plot(self, request):
 
@@ -54,7 +50,7 @@ class DataManager(object):
         else:
             rubric_topics = {k: list(v) for k, v in rubric_topics.items() if k in topics}
 
-        return {'chart': chart.to_json(), 'rubric_topics': rubric_topics}
+        return {'chart': chart.to_json()}
 
 
     def make_bump_chart(self, data):

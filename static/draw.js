@@ -36,7 +36,7 @@ function change_plot() {
 
             var tbl = document.getElementById('table');
 	        tbl.remove();
-            tableCreate(JSON.parse(response)['rubric_topics']);
+            //tableCreate(JSON.parse(response)['rubric_topics']);
         };
 		}
 	);
@@ -73,7 +73,7 @@ function get_data() {
             var ch = JSON.parse(JSON.parse(response)['chart']);
             vegaEmbed('#bar', ch);
             // console.log(JSON.parse(response)['rubric_topics']);
-            tableCreate(JSON.parse(response)['rubric_topics']);
+            //tableCreate(JSON.parse(response)['rubric_topics']);
         };
 		}
 	);
