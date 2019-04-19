@@ -86,7 +86,7 @@ class DataManager(object):
 
     def make_cool_ridge_chart(self, data):
         data['year'] = pd.to_datetime(data['year'].astype(str) + '-01-01')
-        brush = alt.selection(type='interval')
+        brush = alt.selection(type='interval', encodings=['x'])
         step = 18
         overlap = 4
         a = alt.Chart(data).mark_area(stroke='black', strokeWidth=0, fillOpacity=0.6).encode(
