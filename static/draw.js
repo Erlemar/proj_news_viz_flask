@@ -124,4 +124,4 @@ function tableCreate(table_data) {
 
 }
 
-// get_data();
+get_data();
