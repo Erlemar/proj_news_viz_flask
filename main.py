@@ -17,7 +17,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route('/hook', methods=["GET", "POST", 'OPTIONS'])
 def change_plot():
     if request.method == 'POST':
@@ -28,9 +27,9 @@ def change_plot():
 
 @app.route('/initial', methods=["GET", "POST", 'OPTIONS'])
 def get_data():
-    if request.method == 'POST':
+    if request.method == 'GET':
         data_dict = data_manager.get_initial_data()
-        # print('data_dict', data_dict.keys())
+        print('data_dict', data_dict.keys())
         # data_dict = {'rubrics_dict': rubrics_dict, 'topics_dict': topics_dict}
         return json.dumps(data_dict)
 

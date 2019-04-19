@@ -20,7 +20,7 @@ function change_plot() {
 			rubric: rubric,
 			topics: topic_arr
 		}
-	}).success(function(response) {
+	}).done(function(response) {
 		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
 		if (1 != 1) {
 		    // no result
@@ -40,13 +40,13 @@ function change_plot() {
 function get_data() {
 
     $.ajax({
-		type: "POST",
+		type: "get",
 		url: "/initial",
 		data:{
 			placeholder: '0',
-		}
-	}).done(function(response) {
-		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
+		},
+      success: function(response) {
+        // console.log(JSON.parse(response), JSON.parse(response)['found_count']);
 		if (1 != 1) {
 		    // no result
 		    console.log('1111111');
@@ -69,10 +69,14 @@ function get_data() {
             vegaEmbed('#bar', ch);
             // console.log(JSON.parse(response)['rubric_topics']);
             tableCreate(JSON.parse(response)['rubric_topics']);
-        };
-		}
-	);
-}
+      }},
+      error: function(xhr) {
+        console.log('bad')
+      }
+
+	});
+	}
+
 
 function tableCreate(table_data) {
 
