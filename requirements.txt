@@ -1,5 +1,5 @@
 pandas
-altair
+git+https://github.com/altair-viz/altair
 flask
 Flask
 Flask-Cors
