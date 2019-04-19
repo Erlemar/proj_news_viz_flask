@@ -45,15 +45,15 @@ class DataManager(object):
         elif plot_type == 'bump':
             chart = self.make_bump_chart(plot_df)
 
-        with open(f'src/{rubric}.pickle', 'rb') as f:
-            rubric_topics = pickle.load(f)
+        # with open(f'src/{rubric}.pickle', 'rb') as f:
+        #     rubric_topics = pickle.load(f)
         # rubric_topics = pd.DataFrame(rubric_topics)
         rubric_topics = self.rubric_topic_words[rubric]
         if 'All' in topics:
             rubric_topics = rubric_topics
         else:
             rubric_topics = {k: v for k, v in rubric_topics.items() if k in topics}
-        # print(rubric_topics)
+        print(rubric_topics)
 
         return {'chart': chart.to_json(), 'rubric_topics': rubric_topics}
 
