@@ -20,7 +20,7 @@ function change_plot() {
 			rubric: rubric,
 			topics: topic_arr
 		}
-	}).done(function(response) {
+	}).success(function(response) {
 		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
 		if (1 != 1) {
 		    // no result
