@@ -53,7 +53,7 @@ class DataManager(object):
             rubric_topics = rubric_topics
         else:
             rubric_topics = {k: v for k, v in rubric_topics.items() if k in topics}
-        print(rubric_topics)
+        # print(rubric_topics)
 
         return {'chart': chart.to_json(), 'rubric_topics': rubric_topics}
 
