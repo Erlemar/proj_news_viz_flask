@@ -21,7 +21,6 @@ def index():
 def change_plot():
     if request.method == 'POST':
         chart = data_manager.change_plot(request)
-        # print(chart)
 
         return json.dumps(chart)
 

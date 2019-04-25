@@ -12,13 +12,25 @@ function change_plot() {
             topic_arr.push(el.innerHTML);
         }
     });
+
+    var childs_add_data = document.getElementById('add_data').children;
+	var add_data_arr = [];
+	Array.prototype.forEach.call(childs_add_data, function(el, i) {
+        if (el.selected == true) {
+            add_data_arr.push(el.value);
+        }
+    });
+    console.log(add_data_arr);
+    console.log(topic_arr);
+
 	$.ajax({
 		type: "POST",
 		url: "/hook",
 		data:{
 			plot_type: plot_type,
 			rubric: rubric,
-			topics: topic_arr
+			topics: topic_arr,
+			add_data: add_data_arr
 		}
 	}).done(function(response) {
 		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
@@ -26,7 +38,21 @@ function change_plot() {
 		    // no result
 		    console.log('1111111');
 		} else {
+
+		    var topics_dict = JSON.parse(response)['topics_dict'];
+            var select = document.getElementById("topic");
+//            var length = select.options.length;
+//            for (i = 0; i < length; i++) {
+//              select.options[i] = null;
+//            }
+            $("#topic").empty();
+            select.options[select.options.length] = new Option('All', 'All');
+            for(index in topics_dict) {
+                select.options[select.options.length] = new Option(topics_dict[index], index);
+            }
+
             var ch = JSON.parse(JSON.parse(response)['chart']);
+
             vegaEmbed('#bar', ch);
 
             var tbl = document.getElementById('table');

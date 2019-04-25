@@ -39,8 +39,12 @@
 
               </select><br>
               Дополнительные данные<br>
-              <select name="add_data" id="add_data" disabled>
-                <option value="all" selected>Нет</option>
+              <select name="add_data" id="add_data" onchange="change_plot()" multiple>
+                <option value="All" selected>Нет</option>
+                <option value="usd">Курс доллара</option>
+                <option value="mrot">МРОТ</option>
+                <option value="dohod">Доход</option>
+                <option value="oil">Цены на нефть</option>
               </select><br>
 
               Темы<br>
