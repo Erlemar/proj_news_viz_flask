@@ -26,6 +26,7 @@
     </style>
   </head>
   <body>
+  <div class="container col-md-12">
 			<div class="col-md-3" align="center">
               Источник<br>
               <select name="source" id="source" disabled color="gray">
@@ -33,13 +34,13 @@
               </select><br>
 
               Тип графика<br>
-              <select name="plot_type" id="plot_type" onchange="change_plot()">
+              <select name="plot_type" id="plot_type" onchange="change_plot_type()">
                 <option value="ridge" selected>Ridge plot</option>
                 <option value="bump">Bump chart</option>
 
               </select><br>
               Дополнительные данные<br>
-              <select name="add_data" id="add_data" onchange="change_plot()" multiple>
+              <select name="add_data" id="add_data" onchange="change_plot_add()" multiple>
                 <option value="All" selected>Нет</option>
                 <option value="usd">Курс доллара</option>
                 <option value="mrot">МРОТ</option>
@@ -48,17 +49,17 @@
               </select><br>
 
               Темы<br>
-              <select name="topic" id="topic" onchange="change_plot()" multiple size="8">
+              <select name="topic" id="topic" onchange="change_plot_topic()" multiple size="8">
                 <option value="all" selected>All</option>
               </select><br>
 
               Рубрики<br>
-              <select name="rubric" id="rubric" onchange="change_plot()">
+              <select name="rubric" id="rubric" onchange="change_plot_rubric()">
               </select><br>
 
 			</div>
 
-    <div class="container">
+    <div>
 
       <div class="header">
         <h3 class="text-muted">Радар топиков</h3>
@@ -73,6 +74,7 @@
         <!-- Placeholder for the tooltip -->
         <div id="vis-tooltip" class="vg-tooltip"></div>
       </div>
+    </div>
     </div>
 	<script src="static/draw.js"></script>
 

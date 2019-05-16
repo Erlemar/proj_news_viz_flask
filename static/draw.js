@@ -1,17 +1,43 @@
-function change_plot() {
+function change_plot_type() {
     var plot_type_id = document.getElementById('plot_type');
-    var plot_type = plot_type_id.options[plot_type_id.selectedIndex].value
+    var plot_type = plot_type_id.options[plot_type_id.selectedIndex].value;
 
-    var rubric_id = document.getElementById('rubric');
-    var rubric = rubric_id.options[rubric_id.selectedIndex].value
 
-	var childs_topic = document.getElementById('topic').children;
-	var topic_arr = [];
-	Array.prototype.forEach.call(childs_topic, function(el, i) {
-        if (el.selected == true) {
-            topic_arr.push(el.innerHTML);
-        }
-    });
+
+	$.ajax({
+		type: "POST",
+		url: "/hook_type",
+		data:{
+			plot_type: plot_type
+		}
+	}).done(function(response) {
+		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
+		if (1 != 1) {
+		    // no result
+		    console.log('1111111');
+		} else {
+
+//		    var topics_dict = JSON.parse(response)['topics_dict'];
+//            var select = document.getElementById("topic");
+//            $("#topic").empty();
+//            select.options[select.options.length] = new Option('All', 'All');
+//            for(index in topics_dict) {
+//                select.options[select.options.length] = new Option(topics_dict[index], index);
+//            }
+
+            var ch = JSON.parse(JSON.parse(response)['chart']);
+
+            vegaEmbed('#bar', ch);
+
+//            var tbl = document.getElementById('table');
+//	        tbl.remove();
+//            tableCreate(JSON.parse(response)['rubric_topics']);
+        };
+		}
+	);
+}
+
+function change_plot_add() {
 
     var childs_add_data = document.getElementById('add_data').children;
 	var add_data_arr = [];
@@ -20,16 +46,11 @@ function change_plot() {
             add_data_arr.push(el.value);
         }
     });
-    console.log(add_data_arr);
-    console.log(topic_arr);
 
 	$.ajax({
 		type: "POST",
-		url: "/hook",
+		url: "/hook_add",
 		data:{
-			plot_type: plot_type,
-			rubric: rubric,
-			topics: topic_arr,
 			add_data: add_data_arr
 		}
 	}).done(function(response) {
@@ -39,12 +60,81 @@ function change_plot() {
 		    console.log('1111111');
 		} else {
 
-		    var topics_dict = JSON.parse(response)['topics_dict'];
-            var select = document.getElementById("topic");
-//            var length = select.options.length;
-//            for (i = 0; i < length; i++) {
-//              select.options[i] = null;
+//		    var topics_dict = JSON.parse(response)['topics_dict'];
+//            var select = document.getElementById("topic");
+//            $("#topic").empty();
+//            select.options[select.options.length] = new Option('All', 'All');
+//            for(index in topics_dict) {
+//                select.options[select.options.length] = new Option(topics_dict[index], index);
 //            }
+
+            var ch = JSON.parse(JSON.parse(response)['chart']);
+
+            vegaEmbed('#bar', ch);
+
+//            var tbl = document.getElementById('table');
+//	        tbl.remove();
+//            tableCreate(JSON.parse(response)['rubric_topics']);
+        };
+		}
+	);
+}
+
+function change_plot_topic() {
+
+	var childs_topic = document.getElementById('topic').children;
+	var topic_arr = [];
+	Array.prototype.forEach.call(childs_topic, function(el, i) {
+        if (el.selected == true) {
+            topic_arr.push(el.innerHTML);
+        }
+    });
+
+	$.ajax({
+		type: "POST",
+		url: "/hook_topic",
+		data:{
+			topics: topic_arr
+		}
+	}).done(function(response) {
+		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
+		if (1 != 1) {
+		    // no result
+		    console.log('1111111');
+		} else {
+
+            var ch = JSON.parse(JSON.parse(response)['chart']);
+
+            vegaEmbed('#bar', ch);
+
+            var tbl = document.getElementById('table');
+	        tbl.remove();
+            tableCreate(JSON.parse(response)['rubric_topics']);
+        };
+		}
+	);
+}
+
+function change_plot_rubric() {
+
+    var rubric_id = document.getElementById('rubric');
+    var rubric = rubric_id.options[rubric_id.selectedIndex].value;
+
+	$.ajax({
+		type: "POST",
+		url: "/hook_rubric",
+		data:{
+			rubric: rubric
+		}
+	}).done(function(response) {
+		// console.log(JSON.parse(response), JSON.parse(response)['found_count']);
+		if (1 != 1) {
+		    // no result
+		    console.log('1111111');
+		} else {
+
+            var topics_dict = JSON.parse(response)['topics_dict'];
+            var select = document.getElementById("topic");
             $("#topic").empty();
             select.options[select.options.length] = new Option('All', 'All');
             for(index in topics_dict) {
@@ -77,7 +167,7 @@ function get_data() {
 		    // no result
 		    console.log('1111111');
 		} else {
-		    console.log(JSON.parse(response));
+		    // console.log(JSON.parse(response));
             var rubrics_dict = JSON.parse(response)['rubrics_dict'];
             var select = document.getElementById("rubric");
             for(index in rubrics_dict) {
