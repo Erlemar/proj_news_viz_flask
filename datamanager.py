@@ -140,7 +140,8 @@ class DataManager(object):
     def make_bump_chart(self):
         self.plot_df['year'] = pd.to_datetime(self.plot_df['year'].astype(str) + '-01-01')
         brush = alt.selection(type='interval', encodings=['x'])
-        a = alt.Chart(self.plot_df).mark_line(point=True, interpolate='monotone').encode(
+        a = alt.Chart(self.plot_df)\
+            .mark_line(point=True, interpolate='monotone').encode(
                 x='year:T',
                 y='rank:Q',
                 color=alt.Color('Topic:N', sort='descending'),
@@ -187,7 +188,7 @@ class DataManager(object):
 
         data = pd.read_csv(f'src/add_data_cleaned/{data_name}.csv', encoding='utf-8')
         col_name = data.columns[-1]
-        chart = alt.Chart(data).mark_line().encode(
+        chart = alt.Chart(data).mark_line(interpolate='monotone').encode(
             y=f'{col_name}:Q',
             x='year:T',
         ).properties(
@@ -202,22 +203,37 @@ class DataManager(object):
 
     def make_ridge_chart(self):
         self.plot_df['year'] = pd.to_datetime(self.plot_df['year'].astype(str) + '-01-01')
-        brush = alt.selection(type='interval', encodings=['x'])
+        brush = alt.selection_interval(encodings=['x'])
         step = 18
-        overlap = 4
-        a = alt.Chart(self.plot_df).mark_area(stroke='black', strokeWidth=0, fillOpacity=0.6).encode(
+        overlap = 7
+        # Topic selection
+        selection = alt.selection_multi(fields=['Topic'])
+
+        # смена цвета на выборе темы -- всё что не выделили делается серым
+        color = alt.condition(selection,
+                              alt.Color('Topic:N', legend=None,
+                            scale=alt.Scale(scheme="rainbow")),
+                             alt.value('lightgray'))
+
+        a = alt.hconcat(alt.Chart(self.plot_df).mark_area(
+                fillOpacity=0.6, interpolate='monotone').encode(
             x=alt.X('year:T'),
             y=alt.Y('rate:Q', scale=alt.Scale(range=[0, -overlap * (step + 1)]), axis=None),
-            row=alt.Row('Topic:N', header=alt.Header(title=None, labelPadding=0, labelFontSize=0)),
-            color='Topic:N'
-        ).properties(
+            row=alt.Row('Topic:N', header=alt.Header(title=None,
+                labelPadding=0, labelFontSize=0)),
+            color=color
+        ).add_selection(selection).properties(
             width=800,
             height=step,
             bounds='flush',
         ).transform_filter(
             brush
-        )
-        b = alt.Chart(self.plot_df).mark_area().encode(
+        ),
+        alt.Chart(self.plot_df, height=500).mark_point().encode(
+        y=alt.Y('Topic:N', axis=alt.Axis(orient='right')),
+            color=color).add_selection(selection))
+
+        b = alt.Chart(self.plot_df).mark_area(interpolate='monotone').encode(
             y='sum(rate):Q',
             x='year:T',
         ).properties(
